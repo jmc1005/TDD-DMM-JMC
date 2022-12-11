@@ -14,7 +14,31 @@ namespace ClassLibrary1.Tests
         [TestMethod()]
         public void ValidadoraTest()
         {
-            throw new NotImplementedException();
+            // Comprobamos constructor
+            Validadora validadora = new Validadora("44120", "jmc1005@alu.ubu.es", "123456789E", "tarjeta", "ccc", "iban");
+            Assert.IsNotNull(validadora);
+        }
+
+        [TestMethod()]
+        public void ValidaCodigoPostalTest_Rojo()
+        {
+            Validadora validadora = new Validadora("4691", "jmc1005@alu.ubu.es", "123456789E", "tarjeta", "ccc", "iban");
+
+            String provincia = validadora.ValidaCodigoPostal();
+
+            Assert.AreEqual(provincia,""); // el tamaño no es correcto           
+           
+        }
+
+        [TestMethod()]
+        public void ValidaCodigoPostalTest_Verde()
+        {
+            Validadora validadora = new Validadora("46910", "jmc1005@alu.ubu.es", "123456789E", "tarjeta", "ccc", "iban");
+
+            String provincia = validadora.ValidaCodigoPostal();
+
+            Assert.AreEqual(provincia.ToUpper(), "Valencia".ToUpper()); // el tamaño es correcto y la provincia coincide
+
         }
     }
 }

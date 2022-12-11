@@ -3,6 +3,7 @@
     public class Validadora
     {
         private string codigoPostal;
+        private string provincia;
         private string correoElectronico;
         private string nif;
         private string tarjetaCredito;
@@ -14,6 +15,11 @@
         {
             get { return this.codigoPostal; }
             set { this.codigoPostal = value; }
+        }
+        public string Provincia
+        {
+            get { return this.provincia; }
+            set { this.provincia = value; }
         }
 
         public string CorreoElectronico
@@ -57,6 +63,21 @@
             this.ccc = ccc;
             this.iban = iban;
 
+        }
+
+        public String ValidaCodigoPostal()
+        {
+            if (CodigoPostal.Length != 5)
+                return "";
+
+            Dictionary<int, string> dic = ValidadoraUtils.getDictionaryCodigoPostalProvincia();
+            int cod = 0;
+            Int32.TryParse(CodigoPostal.Substring(0, 2), out cod);
+
+            if (cod > 0 && dic.ContainsKey(cod))
+                Provincia = dic[cod];
+
+            return !String.IsNullOrEmpty(Provincia) ? Provincia : "No existe provincia para el código postal indicado";
         }
     }
 }
