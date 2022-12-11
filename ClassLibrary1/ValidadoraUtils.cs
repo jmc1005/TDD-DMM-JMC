@@ -75,5 +75,6 @@ namespace ClassLibrary1
             var mod = numNif % 23;
             return control[mod];
         }
+
     }
 }

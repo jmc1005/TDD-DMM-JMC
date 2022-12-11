@@ -74,5 +74,26 @@ namespace ClassLibrary1.Tests
             string strValidacion = validadora.ValidaNif();
             Assert.AreEqual(strValidacion, "El NIF es válido");
         }
+
+        [TestMethod()]
+        public void validaTarjetaCreditoTest_Rojo()
+        {
+            string tarjetaNoValida = "tarjeta de crédito no válida";
+
+            Validadora validadora = new Validadora("46910", "jmc1005@alu.ubu.es", "24392279C", "tarjeta", "ccc", "iban");
+            string strValidacion = validadora.validaTarjetaCredito();
+            Assert.AreEqual(strValidacion, tarjetaNoValida);
+        }
+
+        [TestMethod()]
+        public void validaTarjetaCreditoTest_Verde()
+        {
+            string tarjetaValida = "tarjeta de crédito válida";
+
+            Validadora validadora = new Validadora("46910", "jmc1005@alu.ubu.es", "24392279C", "5323581135443453", "ccc", "iban");
+            string strValidacion = validadora.validaTarjetaCredito();
+            Assert.AreEqual(strValidacion, tarjetaValida);
+        }
+        
     }
 }
