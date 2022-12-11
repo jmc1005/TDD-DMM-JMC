@@ -47,5 +47,29 @@ namespace ClassLibrary1
 
         }
 
+
+        /**
+        * Recibe una lista y calcula la media geométrica de los valores numéricos.
+        **/
+        public double CalculaMediaGeometrica()
+        {
+            String[] lista = ListaValores.Split(',');
+
+            double mediageom = 1;
+            foreach (String l in lista)
+            {
+                if (EstadisticaUtils.IsNumeric(l) && int.TryParse(l, out int num))
+                {
+                    mediageom *= num;
+                }
+                else
+                {
+                    return double.MinValue;
+                }
+            }
+
+            return Math.Pow(mediageom, 1.0 / lista.Length);
+
+        }
     }
 }
