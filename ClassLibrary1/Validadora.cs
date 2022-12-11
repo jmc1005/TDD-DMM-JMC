@@ -1,4 +1,6 @@
-﻿namespace ClassLibrary1
+﻿using System.Text.RegularExpressions;
+
+namespace ClassLibrary1
 {
     public class Validadora
     {
@@ -78,6 +80,20 @@
                 Provincia = dic[cod];
 
             return !String.IsNullOrEmpty(Provincia) ? Provincia : "No existe provincia para el código postal indicado";
+        }
+
+
+        public static readonly string RegexEmail= @"^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+
+        public static readonly Regex RegexEmailMatch = new Regex(RegexEmail, RegexOptions.IgnoreCase);
+
+        public String ValidaCorreoElectronico()
+        {
+            string correoNoValido = "El correo electrónico no es válido";
+            string correoValido = "El correo electrónico es válido";
+            var isValid = RegexEmailMatch.IsMatch(this.correoElectronico);
+
+            return !String.IsNullOrEmpty(this.correoElectronico) && isValid ? correoValido : correoNoValido;
         }
     }
 }

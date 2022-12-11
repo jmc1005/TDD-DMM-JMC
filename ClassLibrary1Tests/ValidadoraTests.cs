@@ -26,8 +26,8 @@ namespace ClassLibrary1.Tests
 
             String provincia = validadora.ValidaCodigoPostal();
 
-            Assert.AreEqual(provincia,""); // el tamaño no es correcto           
-           
+            Assert.AreEqual(provincia, ""); // el tamaño no es correcto           
+
         }
 
         [TestMethod()]
@@ -38,6 +38,24 @@ namespace ClassLibrary1.Tests
             String provincia = validadora.ValidaCodigoPostal();
 
             Assert.AreEqual(provincia.ToUpper(), "Valencia".ToUpper()); // el tamaño es correcto y la provincia coincide
+
+        }
+
+        [TestMethod()]
+        public void ValidaCorreoElectronicoTest_Rojo()
+        {
+            Validadora validadora = new Validadora("46910", "jmc1005alu.ubu.es", "123456789E", "tarjeta", "ccc", "iban");
+            string strValidacion =validadora.ValidaCorreoElectronico();
+            Assert.AreEqual(strValidacion, "El correo electrónico no es válido");
+
+        }
+
+        [TestMethod()]
+        public void ValidaCorreoElectronicoTest_Verde()
+        {
+            Validadora validadora = new Validadora("46910", "jmc1005@alu.ubu.es", "123456789E", "tarjeta", "ccc", "iban");
+            string strValidacion = validadora.ValidaCorreoElectronico();
+            Assert.AreEqual(strValidacion, "El correo electrónico es válido");
 
         }
     }
