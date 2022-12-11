@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary1
 {
-    internal class Estadistica
+    public class Estadistica
     {
         //
         private string listaValores;
@@ -23,6 +23,29 @@ namespace ClassLibrary1
             ListaValores = listaValores;
         }
 
+        /**
+         * Recibe una lista y calcula la media aritmética de los valores numéricos.
+         **/
+        public int CalculaMediaAritmetica()
+        {
+            String[] lista = ListaValores.Split(',');
+
+            int suma = 0;
+            foreach (String l in lista)
+            {
+                if (EstadisticaUtils.IsNumeric(l) && int.TryParse(l, out int num))
+                {
+                    suma += num;
+                }
+                else
+                {
+                    return int.MinValue;
+                }
+            }
+
+            return suma / lista.Length;
+
+        }
 
     }
 }
