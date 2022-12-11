@@ -45,7 +45,7 @@ namespace ClassLibrary1.Tests
         public void ValidaCorreoElectronicoTest_Rojo()
         {
             Validadora validadora = new Validadora("46910", "jmc1005alu.ubu.es", "123456789E", "tarjeta", "ccc", "iban");
-            string strValidacion =validadora.ValidaCorreoElectronico();
+            string strValidacion = validadora.ValidaCorreoElectronico();
             Assert.AreEqual(strValidacion, "El correo electrónico no es válido");
 
         }
@@ -57,6 +57,22 @@ namespace ClassLibrary1.Tests
             string strValidacion = validadora.ValidaCorreoElectronico();
             Assert.AreEqual(strValidacion, "El correo electrónico es válido");
 
+        }
+
+        [TestMethod()]
+        public void ValidaNifTest_Rojo()
+        {
+            Validadora validadora = new Validadora("46910", "jmc1005@alu.ubu.es", "123456789E", "tarjeta", "ccc", "iban");
+            string strValidacion = validadora.ValidaNif();
+            Assert.AreEqual(strValidacion, "El NIF no es válido");
+        }
+
+        [TestMethod()]
+        public void ValidaNifTest_Verde()
+        {
+            Validadora validadora = new Validadora("46910", "jmc1005@alu.ubu.es", "24392279C", "tarjeta", "ccc", "iban");
+            string strValidacion = validadora.ValidaNif();
+            Assert.AreEqual(strValidacion, "El NIF es válido");
         }
     }
 }

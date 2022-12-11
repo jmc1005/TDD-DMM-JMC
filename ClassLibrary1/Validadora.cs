@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Net;
+using System.Text.RegularExpressions;
 
 namespace ClassLibrary1
 {
@@ -67,6 +68,10 @@ namespace ClassLibrary1
 
         }
 
+        /*
+         * Recibe una cadena y comprueba si es un código postal válido, si no lo es devuelve 
+         * “null”, y si es correcto devuelve una cadena con la provincia a la que corresponde.
+         * */
         public String ValidaCodigoPostal()
         {
             if (CodigoPostal.Length != 5)
@@ -83,10 +88,13 @@ namespace ClassLibrary1
         }
 
 
-        public static readonly string RegexEmail= @"^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+        public static readonly string RegexEmail = @"^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
 
         public static readonly Regex RegexEmailMatch = new Regex(RegexEmail, RegexOptions.IgnoreCase);
 
+        /*
+         * Recibe una cadena y comprueba si se trata de un Email correcto.
+         */
         public String ValidaCorreoElectronico()
         {
             string correoNoValido = "El correo electrónico no es válido";
@@ -94,6 +102,31 @@ namespace ClassLibrary1
             var isValid = RegexEmailMatch.IsMatch(this.correoElectronico);
 
             return !String.IsNullOrEmpty(this.correoElectronico) && isValid ? correoValido : correoNoValido;
+        }
+
+        /*
+         * Recibe una cadena y devuelve un valor que determina el tipo de NIF y si es correcto o no.
+         */
+        public String ValidaNif()
+        {
+            string nifValido = "El NIF es válido"; 
+            string nifNoValido = "El NIF no es válido";
+
+            if (nif.Length != 9)
+            {
+                return nifNoValido;
+            }
+
+            string parteNumericNif = nif.Substring(0, nif.Length - 1);
+            string letraNif = nif.Substring(nif.Length - 1, 1);
+
+            if (!int.TryParse(parteNumericNif, out int numNif))
+            {
+                //No se pudo convertir los números a formato númerico
+                return nifNoValido;
+            }
+
+            return ValidadoraUtils.CalculaLetraNif(numNif) != letraNif ? nifNoValido:nifValido;
         }
     }
 }

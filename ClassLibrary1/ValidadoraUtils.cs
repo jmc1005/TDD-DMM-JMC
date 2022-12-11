@@ -69,5 +69,11 @@ namespace ClassLibrary1
             return codPostalProvincia;
         }
 
+        public static string CalculaLetraNif(int numNif)
+        {
+            string[] control = { "T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E" };
+            var mod = numNif % 23;
+            return control[mod];
+        }
     }
 }
