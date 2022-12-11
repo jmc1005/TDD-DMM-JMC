@@ -30,13 +30,13 @@ namespace ClassLibrary1
         /**
          * Recibe una lista y calcula la media aritmética de los valores numéricos.
          **/
-        public int CalculaMediaAritmetica()
+        public double CalculaMediaAritmetica()
         {
             String[] lista = ListaValores.Split(',');
 
             if (lista != null && lista.Length > 0)
             {
-                int suma = 0;
+                double suma = 0;
                 foreach (String l in lista)
                 {
                     if (EstadisticaUtils.IsNumeric(l) && int.TryParse(l, out int num))
@@ -45,14 +45,14 @@ namespace ClassLibrary1
                     }
                     else
                     {
-                        return int.MinValue;
+                        return double.MinValue;
                     }
                 }
 
                 return suma / lista.Length;
             }
 
-            return int.MinValue;
+            return double.MinValue;
 
         }
 
@@ -146,7 +146,7 @@ namespace ClassLibrary1
         }
 
         /**
-        * Recibe una lista y calcula la mediana de los valores numéricos.
+        * Recibe una lista y calcula la moda de los valores numéricos.
         **/
         public double CalculaModa()
         {
@@ -178,7 +178,7 @@ namespace ClassLibrary1
                     }
                 }
 
-                foreach(var d in dicNum.OrderBy(d=>d.Key))
+                foreach (var d in dicNum.OrderBy(d => d.Key))
                 {
                     if (d.Value == aux_rep)
                         return d.Key;
@@ -189,5 +189,39 @@ namespace ClassLibrary1
             return double.MinValue;
 
         }
+
+        /**
+        * Recibe una lista y calcula la desviación absoluta de los valores numéricos.
+        **/
+        public double CalculaDesviacionAbsoluta()
+        {
+            double media = CalculaMediaAritmetica();
+
+            String[] lista = ListaValores.Split(',');
+
+            if (lista != null && lista.Length > 0)
+            {
+                double suma = 0;
+                foreach (String l in lista)
+                {
+                    if (EstadisticaUtils.IsNumeric(l) && int.TryParse(l, out int num))
+                    {
+                        suma = suma + Math.Abs(num - media);
+                    }
+                    else
+                    {
+                        return double.MinValue;
+                    }
+                }
+
+                return suma / lista.Length;
+
+            }
+
+            return double.MinValue;
+
+        }
+
+
     }
 }

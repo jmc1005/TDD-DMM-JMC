@@ -17,7 +17,7 @@ namespace ClassLibrary1.Tests
             string valores = "5,3,8,6,3";
             Estadistica estadistica = new Estadistica(valores);
             Assert.IsNotNull(estadistica);
-            int media = estadistica.CalculaMediaAritmetica();
+            double media = estadistica.CalculaMediaAritmetica();
             Assert.AreNotEqual(media, 7);
         }
 
@@ -27,7 +27,7 @@ namespace ClassLibrary1.Tests
             string valores = "5,3,8,6,3";
             Estadistica estadistica = new Estadistica(valores);
             Assert.IsNotNull(estadistica);
-            int media = estadistica.CalculaMediaAritmetica();
+            double media = estadistica.CalculaMediaAritmetica();
             Assert.AreEqual(media, 5);
         }
 
@@ -109,6 +109,26 @@ namespace ClassLibrary1.Tests
             Assert.IsNotNull(estadistica);
             double moda = estadistica.CalculaModa();
             Assert.AreEqual(moda, 3);
+        }
+
+        [TestMethod()]
+        public void CalculaDesviacionAbsolutaTest_Rojo()
+        {
+            string valores = "5,3,8,6,3";
+            Estadistica estadistica = new Estadistica(valores);
+            Assert.IsNotNull(estadistica);
+            double desviacion = estadistica.CalculaDesviacionAbsoluta();
+            Assert.AreNotEqual(desviacion, 2);
+        }
+
+        [TestMethod()]
+        public void CalculaDesviacionAbsolutaTest_Verde()
+        {
+            string valores = "5,3,8,6,3";
+            Estadistica estadistica = new Estadistica(valores);
+            Assert.IsNotNull(estadistica);
+            double desviacion = estadistica.CalculaDesviacionAbsoluta();
+            Assert.AreEqual(Math.Round(desviacion,2), 1.60);
         }
     }
 }
