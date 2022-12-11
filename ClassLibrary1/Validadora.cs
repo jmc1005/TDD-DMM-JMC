@@ -142,7 +142,7 @@ namespace ClassLibrary1
             string tarjetaNoValida = "tarjeta de crédito no válida";
             try
             {
-                bool isMasterValida = Regex.IsMatch(this.tarjetaCredito, "^(51|52|53|54|55)") && this.tarjetaCredito.Length==16;
+                bool isMasterValida = Regex.IsMatch(this.tarjetaCredito, "^(51|52|53|54|55)") && this.tarjetaCredito.Length == 16;
                 bool isVisaValida = Regex.IsMatch(this.tarjetaCredito, "^(4)") && (13 == this.tarjetaCredito.Length || 16 == this.tarjetaCredito.Length);
 
                 if (!isMasterValida && !isVisaValida)
@@ -210,5 +210,61 @@ namespace ClassLibrary1
             }
         }
 
+        /**
+         * Recibe una cadena y se debe comprobar si se trata de un CCC bancario correcto.
+         **/
+        public String ValidaCuentaBancaria()
+        {
+            string cccValido = "Cuenta bancaria válida";
+            string cccNoValido = "Cuenta bancaria no válida";
+
+            if (this.ccc.Length != 20)
+                return cccNoValido;
+
+            string banco = this.ccc.Substring(0, 4);
+            string oficina = this.ccc.Substring(4, 4);
+            string dc = this.ccc.Substring(8, 2);
+            string cuenta = this.ccc.Substring(10, 10);
+
+            bool isValid = ValidaCuentaBancaria(banco, oficina, dc, cuenta);
+
+            return isValid ? cccValido : cccNoValido;
+
+        }
+
+        public static bool ValidaCuentaBancaria(string banco, string oficina, string dc, string cuenta)
+        {
+            // Se comprueba que realmente sean números los datos pasados como parámetros y que las longitudes
+            // sean correctas
+            bool isBancoValid = IsNumeric(banco) && banco.Length == 4;
+            bool isOficinaValid = IsNumeric(oficina) && oficina.Length == 4;
+            bool isDCValid = IsNumeric(dc) && dc.Length == 2;
+            bool isCuentaValid = IsNumeric(cuenta) && cuenta.Length == 10;
+
+            return isBancoValid && isOficinaValid && isDCValid && isCuentaValid && CompruebaCuenta(banco, oficina, dc, cuenta);
+        }
+
+        private static bool CompruebaCuenta(string banco, string oficina, string dc, string cuenta)
+        {
+            return GetDigitoControl("00" + banco + oficina) + GetDigitoControl(cuenta) == dc;
+        }
+
+        private static string GetDigitoControl(string CadenaNumerica)
+        {
+            int[] pesos = { 1, 2, 4, 8, 5, 10, 9, 7, 3, 6 };
+            UInt32 suma = 0;
+            UInt32 resto;
+
+            for (int i = 0; i < pesos.Length; i++)
+            {
+                suma += (UInt32)pesos[i] * UInt32.Parse(CadenaNumerica.Substring(i, 1));
+            }
+            resto = 11 - (suma % 11);
+
+            if (resto == 10) resto = 1;
+            if (resto == 11) resto = 0;
+
+            return resto.ToString("0");
+        }
     }
 }

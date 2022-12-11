@@ -94,6 +94,25 @@ namespace ClassLibrary1.Tests
             string strValidacion = validadora.validaTarjetaCredito();
             Assert.AreEqual(strValidacion, tarjetaValida);
         }
-        
+
+        [TestMethod()]
+        public void ValidaCuentaBancariaTest_Rojo()
+        {
+            string cccNoValida = "Cuenta bancaria no válida";
+
+            Validadora validadora = new Validadora("46910", "jmc1005@alu.ubu.es", "24392279C", "5323581135443453", "ccc", "iban");
+            string strValidacion = validadora.ValidaCuentaBancaria();
+            Assert.AreEqual(strValidacion, cccNoValida);
+        }
+
+        [TestMethod()]
+        public void ValidaCuentaBancariaTest_Verde()
+        {
+            string cccValido = "Cuenta bancaria válida";
+
+            Validadora validadora = new Validadora("46910", "jmc1005@alu.ubu.es", "24392279C", "5323581135443453", "00246912501234567891", "iban");
+            string strValidacion = validadora.ValidaCuentaBancaria();
+            Assert.AreEqual(strValidacion, cccValido);
+        }
     }
 }
