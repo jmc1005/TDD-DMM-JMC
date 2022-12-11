@@ -114,5 +114,26 @@ namespace ClassLibrary1.Tests
             string strValidacion = validadora.ValidaCuentaBancaria();
             Assert.AreEqual(strValidacion, cccValido);
         }
+
+        [TestMethod()]
+        public void ValidaIbanTest_Rojo()
+        {
+            string ibanValido = "Cuenta IBAN válido";
+            string ibanNoValido = "Cuenta IBAN no válido";
+
+            Validadora validadora = new Validadora("46910", "jmc1005@alu.ubu.es", "24392279C", "5323581135443453", "00246912501234567891", "PT6621000418401234567891");
+            string strValidacion = validadora.ValidaIban();
+            Assert.AreEqual(strValidacion, ibanNoValido);
+        }
+
+        [TestMethod()]
+        public void ValidaIbanTest_Verde()
+        {
+            string ibanValido = "Cuenta IBAN válido";
+            
+            Validadora validadora = new Validadora("46910", "jmc1005@alu.ubu.es", "24392279C", "5323581135443453", "00246912501234567891", "ES6621000418401234567891");
+            string strValidacion = validadora.ValidaIban();
+            Assert.AreEqual(strValidacion, ibanValido);
+        }
     }
 }

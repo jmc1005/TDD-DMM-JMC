@@ -266,5 +266,41 @@ namespace ClassLibrary1
 
             return resto.ToString("0");
         }
+
+        /*
+         * Recibe una cadena y se debe comprobar si se trata de un IBAN español.
+         * */
+        public string ValidaIban()
+        {
+            string ibanValido = "Cuenta IBAN válido";
+            string ibanNoValido = "Cuenta IBAN no válido";
+
+            return isValidIBAN() ? ibanValido : ibanNoValido;
+        }
+
+        public bool isValidIBAN()
+        {
+            string mysIBAN = iban.Replace(" ", "");
+
+            if (mysIBAN.Length > 34 || mysIBAN.Length < 5)
+                return false;
+            else
+            {
+                string codigoPais = mysIBAN.Substring(0, 2).ToUpper();
+                string digitoControl = mysIBAN.Substring(2, 2).ToUpper();
+                string codBanco = mysIBAN.Substring(4).ToUpper();
+                if (!IsNumeric(digitoControl))
+                    return false;
+
+                if (!ExisteCodigoPais(codigoPais))
+                    return false;
+                string Umstellung = codBanco + codigoPais + "00";
+                string Modulus = IBANCleaner(Umstellung);
+
+                if (98 - Modulo(Modulus, 97) != int.Parse(digitoControl))
+                    return false;
+            }
+            return true;
+        }
     }
 }
