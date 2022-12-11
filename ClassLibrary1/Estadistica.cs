@@ -30,20 +30,25 @@ namespace ClassLibrary1
         {
             String[] lista = ListaValores.Split(',');
 
-            int suma = 0;
-            foreach (String l in lista)
+            if (lista != null && lista.Length > 0)
             {
-                if (EstadisticaUtils.IsNumeric(l) && int.TryParse(l, out int num))
+                int suma = 0;
+                foreach (String l in lista)
                 {
-                    suma += num;
+                    if (EstadisticaUtils.IsNumeric(l) && int.TryParse(l, out int num))
+                    {
+                        suma += num;
+                    }
+                    else
+                    {
+                        return int.MinValue;
+                    }
                 }
-                else
-                {
-                    return int.MinValue;
-                }
+
+                return suma / lista.Length;
             }
 
-            return suma / lista.Length;
+            return int.MinValue;
 
         }
 
@@ -54,21 +59,52 @@ namespace ClassLibrary1
         public double CalculaMediaGeometrica()
         {
             String[] lista = ListaValores.Split(',');
-
-            double mediageom = 1;
-            foreach (String l in lista)
+            if (lista != null && lista.Length > 0)
             {
-                if (EstadisticaUtils.IsNumeric(l) && int.TryParse(l, out int num))
+                double mediageom = 1;
+                foreach (String l in lista)
                 {
-                    mediageom *= num;
+                    if (EstadisticaUtils.IsNumeric(l) && int.TryParse(l, out int num))
+                    {
+                        mediageom *= num;
+                    }
+                    else
+                    {
+                        return double.MinValue;
+                    }
                 }
-                else
+
+                return Math.Pow(mediageom, 1.0 / lista.Length);
+            }
+            return double.MinValue;
+        }
+
+        /**
+        * Recibe una lista y calcula la media armónica de los valores numéricos.
+        **/
+        public double CalculaMediaArmonica()
+        {
+            String[] lista = ListaValores.Split(',');
+
+            if (lista != null && lista.Length > 0)
+            {
+                double suma = 0;
+                foreach (String l in lista)
                 {
-                    return double.MinValue;
+                    if (EstadisticaUtils.IsNumeric(l) && int.TryParse(l, out int num))
+                    {
+                        suma += 1.0 / num;
+                    }
+                    else
+                    {
+                        return double.MinValue;
+                    }
                 }
+
+                return lista.Length / suma;
             }
 
-            return Math.Pow(mediageom, 1.0 / lista.Length);
+            return double.MinValue;
 
         }
     }

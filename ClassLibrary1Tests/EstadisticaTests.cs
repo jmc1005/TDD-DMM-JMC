@@ -50,5 +50,25 @@ namespace ClassLibrary1.Tests
             double media = estadistica.CalculaMediaGeometrica();
             Assert.AreEqual(Math.Round(media, 2), 4.64);
         }
+
+        [TestMethod()]
+        public void CalculaMediaArmonicaTest_Rojo()
+        {
+            string valores = "5,3,8,6,3";
+            Estadistica estadistica = new Estadistica(valores);
+            Assert.IsNotNull(estadistica);
+            double media = estadistica.CalculaMediaArmonica();
+            Assert.AreNotEqual(media, 7);
+        }
+
+        [TestMethod()]
+        public void CalculaMediaArmonicaTest_Verde()
+        {
+            string valores = "5,3,8,6,3";
+            Estadistica estadistica = new Estadistica(valores);
+            Assert.IsNotNull(estadistica);
+            double media = estadistica.CalculaMediaArmonica();
+            Assert.AreEqual(Math.Round(media, 2), 4.32);
+        }
     }
 }
