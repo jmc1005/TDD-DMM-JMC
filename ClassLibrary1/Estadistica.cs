@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
+using System.Drawing;
+using System.Security.Cryptography;
 
 namespace ClassLibrary1
 {
@@ -102,6 +106,84 @@ namespace ClassLibrary1
                 }
 
                 return lista.Length / suma;
+            }
+
+            return double.MinValue;
+
+        }
+
+        /**
+        * Recibe una lista y calcula la mediana de los valores numéricos.
+        **/
+        public double CalculaMediana()
+        {
+            String[] lista = ListaValores.Split(',');
+
+            if (lista != null && lista.Length > 0)
+            {
+                List<double> listaNum = new List<double>();
+                foreach (String l in lista)
+                {
+                    if (EstadisticaUtils.IsNumeric(l) && int.TryParse(l, out int num))
+                    {
+                        listaNum.Add(num);
+                    }
+                    else
+                    {
+                        return double.MinValue;
+                    }
+                }
+
+                listaNum.Sort();
+                int tam = listaNum.Count;
+                int mitad = tam / 2;
+                return (tam % 2 != 0) ? (double)listaNum[mitad] : ((double)listaNum[mitad] + (double)listaNum[mitad - 1]) / 2;
+
+            }
+
+            return double.MinValue;
+
+        }
+
+        /**
+        * Recibe una lista y calcula la mediana de los valores numéricos.
+        **/
+        public double CalculaModa()
+        {
+            String[] lista = ListaValores.Split(',');
+
+            if (lista != null && lista.Length > 0)
+            {
+                Dictionary<double, int> dicNum = new Dictionary<double, int>();
+
+                int aux_rep = 1;
+                foreach (String l in lista)
+                {
+                    if (EstadisticaUtils.IsNumeric(l) && int.TryParse(l, out int num))
+                    {
+                        if (dicNum.ContainsKey(num))
+                        {
+                            int repeticiones = dicNum[num];
+                            repeticiones++;
+                            dicNum[num] = repeticiones;
+
+                            if (repeticiones > aux_rep)
+                                aux_rep = repeticiones;
+                        }
+                        else dicNum.Add(num, 1);
+                    }
+                    else
+                    {
+                        return double.MinValue;
+                    }
+                }
+
+                foreach(var d in dicNum.OrderBy(d=>d.Key))
+                {
+                    if (d.Value == aux_rep)
+                        return d.Key;
+                }
+
             }
 
             return double.MinValue;
