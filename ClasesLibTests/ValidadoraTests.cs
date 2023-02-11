@@ -1,7 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ClasesLib;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-
-namespace ClassLibrary1.Tests
+namespace ClasesLib.Tests
 {
     [TestClass()]
     public class ValidadoraTests
@@ -21,7 +24,7 @@ namespace ClassLibrary1.Tests
 
             String provincia = validadora.ValidaCodigoPostal();
 
-            Assert.AreEqual(provincia, ""); // el tamaño no es correcto           
+            Assert.AreEqual(provincia, "El tamaño del código postal no es correcto"); // el tamaño no es correcto           
 
         }
 
@@ -76,7 +79,7 @@ namespace ClassLibrary1.Tests
             string tarjetaNoValida = "tarjeta de crédito no válida";
 
             Validadora validadora = new Validadora("46910", "jmc1005@alu.ubu.es", "24392279C", "tarjeta", "ccc", "iban");
-            string strValidacion = validadora.validaTarjetaCredito();
+            string strValidacion = validadora.ValidaTarjetaCredito();
             Assert.AreEqual(strValidacion, tarjetaNoValida);
         }
 
@@ -86,7 +89,7 @@ namespace ClassLibrary1.Tests
             string tarjetaValida = "tarjeta de crédito válida";
 
             Validadora validadora = new Validadora("46910", "jmc1005@alu.ubu.es", "24392279C", "5323581135443453", "ccc", "iban");
-            string strValidacion = validadora.validaTarjetaCredito();
+            string strValidacion = validadora.ValidaTarjetaCredito();
             Assert.AreEqual(strValidacion, tarjetaValida);
         }
 
@@ -125,7 +128,7 @@ namespace ClassLibrary1.Tests
         public void ValidaIbanTest_Verde()
         {
             string ibanValido = "Cuenta IBAN válido";
-            
+
             Validadora validadora = new Validadora("46910", "jmc1005@alu.ubu.es", "24392279C", "5323581135443453", "00246912501234567891", "ES6621000418401234567891");
             string strValidacion = validadora.ValidaIban();
             Assert.AreEqual(strValidacion, ibanValido);

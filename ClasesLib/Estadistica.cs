@@ -8,7 +8,7 @@ using System.Collections;
 using System.Drawing;
 using System.Security.Cryptography;
 
-namespace ClassLibrary1
+namespace ClasesLib
 {
     public class Estadistica
     {
@@ -193,6 +193,22 @@ namespace ClassLibrary1
         /**
         * Recibe una lista y calcula la desviación absoluta de los valores numéricos.
         **/
+        public double CalculaDesviacionMedia()
+        {
+            double desviacion = CalculaDesviacionAbsoluta();
+
+            String[] lista = ListaValores.Split(',');
+
+            if (desviacion != double.MinValue)
+                return desviacion / lista.Length;
+
+            return double.MinValue;
+
+        }
+
+        /**
+        * Recibe una lista y calcula la desviación absoluta de los valores numéricos.
+        **/
         public double CalculaDesviacionAbsoluta()
         {
             double media = CalculaMediaAritmetica();
@@ -214,7 +230,7 @@ namespace ClassLibrary1
                     }
                 }
 
-                return suma / lista.Length;
+                return suma;
 
             }
 

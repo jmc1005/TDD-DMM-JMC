@@ -1,12 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ClassLibrary1;
+using ClasesLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace ClassLibrary1.Tests
+namespace ClasesLib.Tests
 {
     [TestClass()]
     public class EstadisticaTests
@@ -128,7 +126,27 @@ namespace ClassLibrary1.Tests
             Estadistica estadistica = new Estadistica(valores);
             Assert.IsNotNull(estadistica);
             double desviacion = estadistica.CalculaDesviacionAbsoluta();
-            Assert.AreEqual(Math.Round(desviacion,2), 1.60);
+            Assert.AreEqual(Math.Round(desviacion, 2), 8);
+        }
+
+        [TestMethod()]
+        public void CalculaDesviacionMediaTest_Rojo()
+        {
+            string valores = "5,3,8,6,3";
+            Estadistica estadistica = new Estadistica(valores);
+            Assert.IsNotNull(estadistica);
+            double desviacion = estadistica.CalculaDesviacionMedia();
+            Assert.AreNotEqual(desviacion, 2);
+        }
+
+        [TestMethod()]
+        public void CalculaDesviacionMediaTest_Verde()
+        {
+            string valores = "5,3,8,6,3";
+            Estadistica estadistica = new Estadistica(valores);
+            Assert.IsNotNull(estadistica);
+            double desviacion = estadistica.CalculaDesviacionMedia();
+            Assert.AreEqual(Math.Round(desviacion, 2), 1.60);
         }
     }
 }

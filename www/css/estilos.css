@@ -1,0 +1,34 @@
+﻿.inactive {
+    display: block;
+    padding: 4px 18px 4px 18px;
+    float: left;
+    color: dimgray;
+    font-weight: bold;
+    /* Only round the top corners */
+    -webkit-border-top-left-radius: 15px;
+    -webkit-border-top-right-radius: 15px;
+    -moz-border-radius-topleft: 15px;
+    -moz-border-radius-topright: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.active {
+    float: left;
+    display: block;
+    padding: 4px 18px 4px 18px;
+    color: white;
+    font-weight: bold;
+    background-color: dimgray;
+    /* Only round the top corners */
+    -webkit-border-top-left-radius: 15px;
+    -webkit-border-top-right-radius: 15px;
+    -moz-border-radius-topleft: 15px;
+    -moz-border-radius-topright: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.inactive:hover {
+    color: lightgray;
+}

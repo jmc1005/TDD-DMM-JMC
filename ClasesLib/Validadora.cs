@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualBasic;
+﻿using System;
 using System.Collections;
-using System.Net;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using static ClassLibrary1.ValidadoraUtils;
+using static ClasesLib.ValidadoraUtils;
 
-namespace ClassLibrary1
+namespace ClasesLib
 {
     public class Validadora
     {
@@ -78,7 +78,7 @@ namespace ClassLibrary1
         public String ValidaCodigoPostal()
         {
             if (CodigoPostal.Length != 5)
-                return "";
+                return "El tamaño del código postal no es correcto";
 
             Dictionary<int, string> dic = ValidadoraUtils.getDictionaryCodigoPostalProvincia();
             int cod = 0;
@@ -121,7 +121,7 @@ namespace ClassLibrary1
             }
 
             string parteNumericNif = nif.Substring(0, nif.Length - 1);
-            string letraNif = nif.Substring(nif.Length - 1, 1);
+            string letraNif = nif.Substring(nif.Length - 1, 1).ToUpper();
 
             if (!int.TryParse(parteNumericNif, out int numNif))
             {
@@ -136,7 +136,7 @@ namespace ClassLibrary1
          * Recibe una cadena y se debe comprobar si se trata de un número de tarjeta válido
          * Para simplificar se asumirá que solamente se deben validar las tarjetas VISA y MASTERCARD.
          * */
-        public String validaTarjetaCredito()
+        public String ValidaTarjetaCredito()
         {
             string tarjetaValida = "tarjeta de crédito válida";
             string tarjetaNoValida = "tarjeta de crédito no válida";
@@ -148,35 +148,23 @@ namespace ClassLibrary1
                 if (!isMasterValida && !isVisaValida)
                     return tarjetaNoValida;
 
-                // Array to contain individual numbers
                 System.Collections.ArrayList CheckNumbers = new ArrayList();
-                // So, get length of card
                 int CardLength = tarjetaCredito.Length;
 
-                // Double the value of alternate digits, starting with the second digit
-                // from the right, i.e. back to front.
-                // Loop through starting at the end
                 for (int i = CardLength - 2; i >= 0; i = i - 2)
                 {
-                    // Now read the contents at each index, this
-                    // can then be stored as an array of integers
-
-                    // Double the number returned
                     CheckNumbers.Add(Int32.Parse(tarjetaCredito[i].ToString()) * 2);
                 }
 
-                int CheckSum = 0;    // Will hold the total sum of all checksum digits
+                int CheckSum = 0;   
 
-                // Second stage, add separate digits of all products
                 for (int iCount = 0; iCount <= CheckNumbers.Count - 1; iCount++)
                 {
-                    int _count = 0;    // will hold the sum of the digits
+                    int _count = 0; 
 
-                    // determine if current number has more than one digit
                     if ((int)CheckNumbers[iCount] > 9)
                     {
                         int _numLength = ((int)CheckNumbers[iCount]).ToString().Length;
-                        // add count to each digit
                         for (int x = 0; x < _numLength; x++)
                         {
                             _count = _count + Int32.Parse(
@@ -185,23 +173,17 @@ namespace ClassLibrary1
                     }
                     else
                     {
-                        // single digit, just add it by itself
                         _count = (int)CheckNumbers[iCount];
                     }
-                    CheckSum = CheckSum + _count;    // add sum to the total sum
+                    CheckSum = CheckSum + _count;    
                 }
-                // Stage 3, add the unaffected digits
-                // Add all the digits that we didn't double still starting from the
-                // right but this time we'll start from the rightmost number with 
-                // alternating digits
+
                 int OriginalSum = 0;
                 for (int y = CardLength - 1; y >= 0; y = y - 2)
                 {
                     OriginalSum = OriginalSum + Int32.Parse(tarjetaCredito[y].ToString());
                 }
 
-                // Perform the final calculation, if the sum Mod 10 results in 0 then
-                // it's valid, otherwise its false.
                 return ((OriginalSum + CheckSum) % 10) == 0 ? tarjetaValida : tarjetaNoValida;
             }
             catch
